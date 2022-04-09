@@ -22,15 +22,15 @@ class User < ApplicationRecord
 
 # フォロワー関係
   def follow(user_id)
-    follower.create(folloewd_id: user_id)
+    follower.create(followed_id: user_id)
   end
   
   def unfollow(user_id)
-    follower.find(followed_id: user_id).destroy
+    follower.find_by(followed_id: user_id).destroy
   end
   
-  def following?(user_id)
-    following_user.include?(user)
+  def following?(user)
+    followings.include?(user)
   end
   
 # 　プロフィール画像取得

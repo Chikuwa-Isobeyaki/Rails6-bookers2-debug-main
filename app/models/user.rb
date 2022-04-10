@@ -37,4 +37,17 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
+  
+  # 検索機能関係
+  def self.search_for(content, search)
+    if search == 'perfect'
+      User.where(name: content)
+    elsif search == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif search == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
 end

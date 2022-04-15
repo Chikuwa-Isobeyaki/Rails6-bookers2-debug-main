@@ -19,12 +19,15 @@
 </table>
 　
 <div class='row'>
-  <% if user == current_user %>
+  <% if current_user != user %>
+    <td><%= render "relationships/follow-btn", user: user %></td>
+  <% else %>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>
       <i class="fas fa-user-cog"></i>
-    <%end%>
-  <%else%>
-  <td><%= render 'relationships/follow-btn', user: user %></td>
-  <%end%>
-    
+    <% end %>
+  <% end %>
+  
+  <% if current_user != user && current_user.following?(user) && user.following?(current_user) %>
+    <%= link_to 'chatを始める', chat_path(user.id), class: "ml-3" %>
+  <% end %>
 </div>
